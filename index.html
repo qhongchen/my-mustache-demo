@@ -11,25 +11,38 @@
 
   <script src="/xuni/bundle.js"></script>
   <script>
-    // const templateStr = '今天是{{date}}，天气{{weather}}';
-    const templateStr = `
-      <div>
-        <ol>
-          {{#students}}
-          <li>
-            学生{{item.name}}的爱好是
-            <ol>
-              {{#item.hobbies}}
-              <li>{{.}}</li>
-              {{/item.hobbies}}
-            </ol>
-          </li>
-          {{/students}}
-        </ol>
-      </div>
-    `;
-    const data = { };
-    window.MyTemplateEngine.render(templateStr,data)
+    // 简单Object
+    const templateStr = '今天是{{date}}，天气{{weather}}，气温{{m.n.p}}℃';
+    const data = {
+        date: "星期一",
+        weather: "晴",
+        m: {
+          n: {
+            p: 26
+          }
+        }
+     };
+
+
+    // const templateStr = `
+    //   <div>
+    //     <ol>
+    //       {{#students}}
+    //       <li>
+    //         学生{{item.name}}的爱好是
+    //         <ol>
+    //           {{#item.hobbies}}
+    //           <li>{{.}}</li>
+    //           {{/item.hobbies}}
+    //         </ol>
+    //       </li>
+    //       {{/students}}
+    //     </ol>
+    //   </div>
+    // `;
+    // const data = { };
+    const domStr = window.MyTemplateEngine.render(templateStr,data)
+    console.log(domStr);
   </script>
 </body>
 </html

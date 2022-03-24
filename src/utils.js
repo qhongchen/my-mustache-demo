@@ -17,7 +17,7 @@ export const parseTemplateToTokens = function () {
       if (word[0] === '#' || word[0] === '/') {
         words.push([word[0], word.substring(1)])
       } else {
-        words.push(['text', word])
+        words.push(['name', word])
       }
     }
 
@@ -51,4 +51,40 @@ const nestedTokens = function (tokens) {
   })
 
   return nestedTokens
+}
+
+export const renderTemplate = function (tokens, data) {
+  let domStr = ''
+  tokens.forEach((token) => {
+    switch (token[0]) {
+      case 'text':
+        domStr += token[1]
+        break
+      case 'name':
+        domStr += lookup(data,token[1])
+        break
+      case '#':
+        break
+    }
+  })
+
+  return domStr
+}
+
+const lookup = function (data, key) {
+  let value
+  if (!data) {
+    return
+  }
+
+  if (key && key.includes('.') && key[0] !== '.') {
+    const keys = key.split('.')
+    value = data
+    keys.forEach((newKey) => {
+      value = value && value[newKey]
+    })
+    return value
+  } else {
+    return data[key]
+  }
 }
